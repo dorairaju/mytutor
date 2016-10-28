@@ -26,6 +26,36 @@ var encryptPassword = function(password){
     return encryptedPassword;
 }
 
+app.get('/users', function (req, res){
+
+    	User.find(function(err, user){
+    		if(err){
+    			throw err;
+    		}
+    		res.json(user);
+    	});
+
+	//res.status(200).send("user");
+	//res.json(User);
+
+});
+
+//Getting user data by username
+app.get('/users/:username', function (req, res){
+
+    	User.find({username: req.params.username}, function(err, user){
+    		if(err){
+    			throw err;
+    		}
+    		res.json(user);
+    	});
+
+	//res.status(200).send("user");
+	//res.json(User);
+
+});
+
+
 
 app.post('/users', function (req, res){
 		var userDb = req.body;
@@ -41,6 +71,18 @@ app.post('/users', function (req, res){
         console.log('User saved successfully!');
         res.status(200).send(user.toJSON());
     });
+
+});
+
+app.get('/courses', function (req, res){
+
+    	Course.find(function(err, course){
+    		if(err){
+    			throw err;
+    		}
+    		res.json(course);
+    	});
+
 
 });
 
