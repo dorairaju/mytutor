@@ -61,12 +61,13 @@ app.post('/courses', function (req, res){
 });
 
 
-/*
+
 app.get('/', function  (req, res) {
 	
-	res.sendFile(__dirname + '/client/view/index.html');
+	//res.sendFile(__dirname + '/client/view/index.html');
+	res.send("Welcome to your local server");
 });
-*/
+
 
 
 
