@@ -86,6 +86,19 @@ app.get('/courses', function (req, res){
 
 });
 
+//Getting courses by course name
+app.get('/courses/:coursename', function (req, res){
+
+    	Course.find({name: req.params.coursename}, function(err, course){
+    		if(err){
+    			throw err;
+    		}
+    		res.json(course);
+    	});
+
+
+});
+
 app.post('/courses', function (req, res){
 
 		var courseDb = req.body;
