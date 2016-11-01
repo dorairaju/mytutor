@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="mytutor">
+<head>
+	<meta charset="UTF-8">
+	<title>Mytutor</title>
+	<!--
+	 <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
+	 <link rel="stylesheet" href="bower_components/bootswatch-dist/css/bootstrap.min.css">
+	-->
+	 <link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+	<script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+	<script type="text/javascript" src="bower_components/angular-resource/angular-resource.min.js"></script>
+	<script type="text/javascript" src="app.js"></script>
+	<script type="text/javascript" src="routes.js"></script>
+	<script type="text/javascript" src="login/controller.js"></script>
+	<script type="text/javascript" src="signup/controller.js"></script>
+</head>
+<body>
+	<nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" ui-sref="#">My tutor</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+      			<li><a ui-sref="signup">Sign Up</a></li>
+      			<li><a ui-sref="login">Login</a></li>
+    		</ul>
+        </div>
+    </nav>
+    <div class="container">
+    	<!-- <h1>Welcome to my tutor page</h1> -->
+    	<div ui-view></div>
+    </div>
+    
+	
+</body>
+</html>

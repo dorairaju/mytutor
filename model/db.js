@@ -1,10 +1,9 @@
-
 var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
-	username: { type: String, required: true },
+	 username: { type: String, unique : true, required: true },
      password: { type: String, required: true },
      firstname: {type:String, required: true},
      middlename: String,
@@ -29,6 +28,7 @@ var tDetailsSchema = new Schema({
 
 
 var courseSchema = new Schema({
+        userId: { type: String, required: true },
         name:{type: String, required: true},
         description: String,
         skillLevel: String,

@@ -1,0 +1,25 @@
+{
+  "name": "mytutor",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Dorairaju <dorairaj512@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/dorairaju/mytutor",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "angular": "^1.5.8",
+    "angular-resource": "^1.5.8",
+    "angular-ui-router": "^0.3.1",
+    "angular-bootstrap": "^2.2.0",
+    "bootswatch-dist": "^3.3.1+2-lumen"
+  }
+}
