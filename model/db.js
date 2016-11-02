@@ -1,15 +1,33 @@
 var mongoose = require('mongoose');
+var uniqueValidator = require('mongoose-unique-validator');
 
 var Schema = mongoose.Schema;
 
+//Schema.plugin(uniqueValidator);
+
+/*
+I have added the following code in mongo shell for the uniqueness of "username".
+
+db.users.createIndex({username: 1}, {unique:true})
+
+and it returns the following.
+
+{
+    "createdCollectionAutomatically" : false,
+    "numIndexesBefore" : 1,
+    "numIndexesAfter" : 2,
+    "ok" : 1
+}
+*/
+
 var userSchema = new Schema({
-	 username: { type: String, unique : true, required: true },
+	 username: { type: String, unique : true, required: true},
      password: { type: String, required: true },
      firstname: {type:String, required: true},
      middlename: String,
       lastname : {type:String, required: true},
       DOB: Date,
-      phoneNumber : Number,     
+      phoneNumber : String,     
       
         created_at: Date,
         updated_at: Date
@@ -22,8 +40,8 @@ var userSchema = new Schema({
 );
 
 var tDetailsSchema = new Schema({ 
-        name: String,
-        duration: Number
+        name: {type: String, required: true },
+        duration: {type: Number, required: true}
 });
 
 
@@ -34,9 +52,10 @@ var courseSchema = new Schema({
         skillLevel: String,
         preReqs: String,
         endGoal: {type: String, required: true},
-        courseType : Boolean,
+        courseType : String,
         fee: Number,
         topicDetails: [tDetailsSchema],
+        autherFullname: {type: String, required: true},
         created_at: Date,
         updated_at: Date        
     },

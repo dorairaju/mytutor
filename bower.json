@@ -20,6 +20,8 @@
     "angular-resource": "^1.5.8",
     "angular-ui-router": "^0.3.1",
     "angular-bootstrap": "^2.2.0",
-    "bootswatch-dist": "^3.3.1+2-lumen"
+    "bootswatch-dist": "^3.3.1+2-lumen",
+    "angular-cookies": "^1.5.8",
+    "angularjs-crypto": "^1.4.0"
   }
 }

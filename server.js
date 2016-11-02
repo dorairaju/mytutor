@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var crypto = require('crypto-js');
 
 var cors = require('cors');
+var _ = require('underscore');
 
 
 var bodyParser = require('body-parser');
@@ -63,6 +64,10 @@ app.get('/users/:username', function (req, res){
     			throw err;
     		}
             else{
+                //var editUser = _.pick(user, 'username', 'password');
+
+                //console.log(typeof(user));
+
                 res.json(user);    
             }
     		
@@ -77,9 +82,11 @@ app.get('/users/:username', function (req, res){
 
 app.post('/users', function (req, res){
 		var userDb = req.body;
+
+        //console.log((userDb.username).toLowerCase() );
 	
 		
-		var user = new User ({username:userDb.username, password: encryptPassword(userDb.password), firstname: userDb.firstname, middlename: userDb.middlename, lastname: userDb.lastname, DOB: userDb.DOB, phoneNumber: userDb.phoneNumber  });
+		var user = new User ({username:(userDb.username).toLowerCase(), password: encryptPassword(userDb.password), firstname: userDb.firstname, middlename: userDb.middlename, lastname: userDb.lastname, DOB: userDb.DOB, phoneNumber: userDb.phoneNumber  });
 		//var user = new User ({username:temp.username, password: temp.password, firstname: temp.firstname, middlename: temp.middlename, lastname: temp.lastname, DOB: temp.DOB, phoneNumber: temp.phoneNumber  });
 
 				user.save(function(err) {
@@ -141,7 +148,7 @@ app.post('/courses', function (req, res){
 
 		var courseDb = req.body;
 
-		var course = new Course ({userId:courseDb.userId, name:courseDb.name, description: courseDb.description, skillLevel: courseDb.skillLevel, preReqs: courseDb.preReqs, endGoal: courseDb.endGoal, courseType : courseDb.courseType, fee: courseDb.fee, topicDetails: courseDb.topicDetails });
+		var course = new Course ({userId:courseDb.userId, name:courseDb.name, description: courseDb.description, skillLevel: courseDb.skillLevel, preReqs: courseDb.preReqs, endGoal: courseDb.endGoal, courseType : courseDb.courseType, fee: courseDb.fee, topicDetails: courseDb.topicDetails, autherFullname: courseDb.autherFullname });
       
       
 		course.save(function(err) {

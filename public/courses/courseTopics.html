@@ -1,0 +1,9 @@
+
+<h2> Topics for {{selectedCourse.name}}</h2>
+<ul class="list-group">
+    <li class="list-group-item" ng-repeat="topic in selectedCourse.topicDetails">
+        <span class="badge">{{topic.duration}}</span> {{topic.name}}
+    </li>
+</ul>
+
+<button class="btn btn-primary" ng-click="register()">Take this course</button>
