@@ -20,6 +20,8 @@ and it returns the following.
 }
 */
 
+var regCoursesSchema = new Schema({courseid: String});
+
 var userSchema = new Schema({
 	 username: { type: String, unique : true, required: true},
      password: { type: String, required: true },
@@ -27,7 +29,8 @@ var userSchema = new Schema({
      middlename: String,
       lastname : {type:String, required: true},
       DOB: Date,
-      phoneNumber : String,     
+      phoneNumber : String,
+      regCourses: [regCoursesSchema],     
       
         created_at: Date,
         updated_at: Date

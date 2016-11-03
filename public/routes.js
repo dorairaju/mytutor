@@ -25,7 +25,12 @@ myApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $
 			url: '/courseTopics',
 			templateUrl: '/courses/courseTopics.html',
 			controller: 'topicsController'
-		});
+		})
+        .state('regCourses', {
+            url: '/regCourses',
+            templateUrl: '/courses/regCourses.html',
+            controller: 'regCoursesController'
+        });
 
 }]);
 

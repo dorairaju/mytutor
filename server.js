@@ -64,10 +64,6 @@ app.get('/users/:username', function (req, res){
     			throw err;
     		}
             else{
-                //var editUser = _.pick(user, 'username', 'password');
-
-                //console.log(typeof(user));
-
                 res.json(user);    
             }
     		
@@ -86,7 +82,7 @@ app.post('/users', function (req, res){
         //console.log((userDb.username).toLowerCase() );
 	
 		
-		var user = new User ({username:(userDb.username).toLowerCase(), password: encryptPassword(userDb.password), firstname: userDb.firstname, middlename: userDb.middlename, lastname: userDb.lastname, DOB: userDb.DOB, phoneNumber: userDb.phoneNumber  });
+		var user = new User ({username:(userDb.username).toLowerCase(), password: encryptPassword(userDb.password), firstname: userDb.firstname, middlename: userDb.middlename, lastname: userDb.lastname, DOB: userDb.DOB, phoneNumber: userDb.phoneNumber, regCourses: userDb.regCourses  });
 		//var user = new User ({username:temp.username, password: temp.password, firstname: temp.firstname, middlename: temp.middlename, lastname: temp.lastname, DOB: temp.DOB, phoneNumber: temp.phoneNumber  });
 
 				user.save(function(err) {

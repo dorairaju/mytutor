@@ -30,7 +30,7 @@ var user =JSON.parse($cookies.get('currentUser'));
 
 (function() {
 
-	  var courses = $http.get("http://localhost:3000/coursesID/"+user._id)
+	  var courses = $http.get("http://localhost:3000/courses")
 	  .then(function(response) {
       
       $scope.courses = response.data;
@@ -86,7 +86,7 @@ var user =JSON.parse($cookies.get('currentUser'));
 /* Showing topics in Course Topics page */
 (function() {
 
-	var courseSelected = {};
+	//var courseSelected = {};
 	$scope.displayTopics = function(course) {
 
 		courseService.setSelectedCourse(course);
@@ -95,6 +95,40 @@ var user =JSON.parse($cookies.get('currentUser'));
 		$location.path("/courseTopics");
 
 	};
+
+}());
+
+
+/* Storing registered courses of the user in courses service */
+
+(function(){
+
+  $scope.regCourses = function(courses) {
+    //console.log(courses);
+    //console.log(user.regCourses);
+
+    var regCourseids = [];
+
+    _.each(user.regCourses, function(regCourse) {
+        regCourseids.push(regCourse.courseid);
+    });
+
+    var regCourses = [];
+    
+    _.each(courses, function(course) {
+        _.each(regCourseids, function(regid){
+            if(course._id === regid) regCourses.push(course);
+        });
+    });
+
+
+    courseService.setRegCourses(regCourses);
+
+    $location.path("/regCourses");
+
+    
+
+  }
 
 }());
 
@@ -109,6 +143,12 @@ myApp.controller("topicsController",['$scope', 'courseService', function($scope,
   $scope.selectedCourse = courseService.selectedCourse;
 
 	console.log(courseService.selectedCourse);
+
+}]);
+
+myApp.controller("regCoursesController",['$scope', 'courseService', function($scope, courseService){
+
+  $scope.regCourses = courseService.regCourses;
 
 }]);
 
