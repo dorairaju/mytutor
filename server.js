@@ -44,9 +44,11 @@ app.get('/users', function (req, res){
 
     	User.find(function(err, user){
     		if(err){
-    			throw err;
+    			res.status(404).json({"error":err});
     		}else {
-                res.json(user);    
+
+                res.json(user);
+
             }
     		
     	});
@@ -60,11 +62,30 @@ app.get('/users', function (req, res){
 app.get('/users/:username', function (req, res){
 
     	User.find({username: req.params.username}, function(err, user){
-    		if(err){
-    			throw err;
+    		if(err || user.length == 0){
+    			res.status(404).json({"error":err});
     		}
             else{
+
+                //console.log(user);
+
+                //var userObj = user;
+
+                //console.log(typeof(userObj[0]));
+                //console.log(userObj[0].password);
+
+                if( user[0].password !== undefined){
+                    //code to decrypt the encripted password
+                    var bytes = crypto.AES.decrypt(user[0].password, encryptionKey);
+                    user[0].password = bytes.toString(crypto.enc.Utf8);                    
+                }
+
+
+
+                //console.log(userObj[0]);
+
                 res.json(user);    
+                //res.json(userObj);
             }
     		
     	});
@@ -102,9 +123,10 @@ app.get('/courses', function (req, res){
 
     	Course.find(function(err, course){
     		if(err){
-    			throw err;
-    		}
-    		res.json(course);
+    			res.status(404).json({"error":err});
+    		} else {
+                res.json(course);
+            }
     	});
 
 
@@ -115,9 +137,11 @@ app.get('/courses/:coursename', function (req, res){
 
     	Course.find({name: req.params.coursename}, function(err, course){
     		if(err){
-    			throw err;
+    			res.status(404).json({"error":err});
     		}
-    		res.json(course);
+            else{
+    		     res.json(course);
+            }
     	});
 
 
@@ -130,9 +154,11 @@ app.get('/coursesID/:userId', function (req, res){
       
         Course.find({userId: req.params.userId}, function(err, course){
             if(err){
-                throw err;
+                res.status(404).json({"error":err});
             }
-            res.json(course);
+            else{
+                res.json(course);
+            }
         });
 
     //res.json({name: "dorai", id: 1});
@@ -161,14 +187,21 @@ app.post('/courses', function (req, res){
 
 });
 
+//updating user's registered courses information by id 
 
-/*
-app.get('/', function  (req, res) {
-	
-	//res.sendFile(__dirname + '/client/view/index.html');
-	//res.send("Welcome to your local server");
-     res.json({name: "dorai", id: 1});
+app.put('/users/:id', function (req, res) {
+    var id = req.params.id;
+
+    //console.log("test"+req.body.regCourses);
+    
+    var condition = { _id: req.params.id};
+    var update = { regCourses: req.body.regCourses};
+    var options = {multi: true};
+
+    User.update(condition, update, options, function(err, doc) {
+        res.json(doc);
+    });
+    
+
 });
-*/
-
 

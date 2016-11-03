@@ -4,6 +4,8 @@ myApp.controller('coursesController', ['$scope', '$location', '$cookies', '$http
 
 var user =JSON.parse($cookies.get('currentUser'));
 
+courseService.setCurrentUser(user);
+
 //console.log("user info"+user._id);
 
   $scope.courses = null;
@@ -30,7 +32,8 @@ var user =JSON.parse($cookies.get('currentUser'));
 
 (function() {
 
-	  var courses = $http.get("http://localhost:3000/courses")
+	  //var courses = $http.get("http://localhost:3000/courses")
+    var courses = $http.get("/courses")
 	  .then(function(response) {
       
       $scope.courses = response.data;
@@ -60,16 +63,11 @@ var user =JSON.parse($cookies.get('currentUser'));
 	 	var newCourse = $scope.course;
 	 		newCourse.autherFullname = user.firstname + ' ' +user.lastname;
 	 		newCourse.userId = user._id;
-	 	    //console.log(newCourse);
-	     //alert("Save Course.");
 
-	         	$http.post('http://localhost:3000/courses', JSON.stringify(newCourse)).success(function(response) {
-				
-				$scope.courses.push(response);
+	   //$http.post('http://localhost:3000/courses', JSON.stringify(newCourse)).success(function(response) {
+		$http.post('/courses', JSON.stringify(newCourse)).success(function(response) {		
+		 $scope.courses.push(response);
 
-				//alert("Successfully signedup.");
-
-				console.log(response);
 			});
 
 
@@ -92,7 +90,7 @@ var user =JSON.parse($cookies.get('currentUser'));
 		courseService.setSelectedCourse(course);
 
 		//console.log(course);
-		$location.path("/courseTopics");
+		$location.path("/courseTopics/"+course._id);
 
 	};
 
@@ -121,13 +119,8 @@ var user =JSON.parse($cookies.get('currentUser'));
         });
     });
 
-
     courseService.setRegCourses(regCourses);
-
     $location.path("/regCourses");
-
-    
-
   }
 
 }());
@@ -136,19 +129,102 @@ var user =JSON.parse($cookies.get('currentUser'));
 }]);
 
 
-myApp.controller("topicsController",['$scope', 'courseService', function($scope, courseService){
+myApp.controller("topicsController",['$scope', 'courseService', '$location', '$http', '$cookies', 'loginService', function($scope, courseService, $location, $http, $cookies, loginService){
 
-  $scope.message = "ehllo";
 
   $scope.selectedCourse = courseService.selectedCourse;
 
-	console.log(courseService.selectedCourse);
+  var user = courseService.currentUser;
+
+  var currentUserId =  courseService.currentUser._id;
+
+  var regCourseids = [];
+
+  _.each(courseService.currentUser.regCourses, function(regCourse) {
+    regCourseids.push(regCourse.courseid);
+  });
+
+  //console.log(regCourseids.toString().indexOf(courseService.selectedCourse._id) == -1);
+
+  if( regCourseids.toString().indexOf(courseService.selectedCourse._id) == -1) {
+
+    $scope.showRegbtn = false;
+
+  }
+  else {
+    $scope.showRegbtn = true;
+  }
+
+
+  /***********************This function is to register the course and add that to the user database*****************/
+
+  (function(){
+
+    $scope.register = function() {
+
+
+          //Adding registered course id starts here
+          regCourseids.push(courseService.selectedCourse._id);
+
+
+          var courseIdsArray = [];
+
+          _.each(regCourseids, function(regCourseid) {
+
+            courseIdsArray.push({"courseid": regCourseid});
+
+          });
+
+          var courseIdsObject = {regCourses: courseIdsArray};
+
+      
+          $http.put('/users/'+ currentUserId, JSON.stringify(courseIdsObject)).success(function(response) {
+              alert("Registered courses updated.");
+              //console.log(response);
+          });
+
+
+/*  Regreshing user data in the cookies starts here*/
+        loginService.userData(courseService.currentUser.username).then(function(response){
+
+        var userDB = response[0];
+
+        $cookies.put('currentUser', JSON.stringify(userDB) );
+
+        //console.log(userDB);
+
+        });
+
+/*  Regreshing user data in the cookies ends here*/
+    
+
+    
+
+
+    }
+
+  }());
 
 }]);
 
-myApp.controller("regCoursesController",['$scope', 'courseService', function($scope, courseService){
+myApp.controller("regCoursesController",['$scope', 'courseService', '$location', function($scope, courseService, $location){
 
   $scope.regCourses = courseService.regCourses;
+
+  /* Showing topics in Course Topics page */
+    (function() {
+
+      //var courseSelected = {};
+      $scope.displayTopics = function(course) {
+
+        courseService.setSelectedCourse(course);
+
+        //console.log(course);
+        $location.path("/courseTopics/"+course._id);
+
+      };
+
+    }());
 
 }]);
 

@@ -22,7 +22,7 @@ myApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $
 			controller: 'coursesController'
 		})
 		.state('courseTopics', {
-			url: '/courseTopics',
+			url: '/courseTopics/:courseid',
 			templateUrl: '/courses/courseTopics.html',
 			controller: 'topicsController'
 		})
@@ -35,7 +35,7 @@ myApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $
 }]);
 
 
-myApp.run(['$rootScope', '$cookies', '$location', function ($rootScope, $cookies, $location) {
+myApp.run(['$rootScope', '$cookies', '$location', '$http', function ($rootScope, $cookies, $location, $http) {
 
 	$rootScope.showLogin = true;
 	$rootScope.showSignup = true;
@@ -46,6 +46,14 @@ myApp.run(['$rootScope', '$cookies', '$location', function ($rootScope, $cookies
         $location.path('/login');
 
     }
+
+    $rootScope.cookieRefresh = function () {
+        //alert($cookies.get('currentUser'));
+
+        //JSON.parse($cookies.get('currentUser'));
+    }
+
+
 
     $rootScope.$on('$stateChangeStart', function (event, toState, fromState) {
         console.log(toState.name);
@@ -62,7 +70,7 @@ myApp.run(['$rootScope', '$cookies', '$location', function ($rootScope, $cookies
                 $rootScope.showSignup = false;
                 $rootScope.showLogin = false;
 
-            $rootScope.message = null;
+            //$rootScope.message = null;
             if (loggedInUser === undefined) {
                 event.preventDefault();
                 $rootScope.showLogout = false;
@@ -70,6 +78,14 @@ myApp.run(['$rootScope', '$cookies', '$location', function ($rootScope, $cookies
                 $rootScope.showLogin = true;
                 $location.path('/login');
             }
+        }
+
+        //alert(loggedInUser);
+
+        if( loggedInUser !== undefined){
+            //alert("hii");
+
+            $rootScope.cookieRefresh();
         }
 
        	// if (toState.name === 'login' || toState.name === 'signup') {

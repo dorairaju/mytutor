@@ -2,6 +2,7 @@ myApp.service('courseService', [function () {
 
 		this.selectedCourse = null;
 		this.regCourses = null;
+		this.currentUser = null;
 
 	    this.setSelectedCourse = function (course) {
         	this.selectedCourse = course;
@@ -9,6 +10,10 @@ myApp.service('courseService', [function () {
 
     	this.setRegCourses = function (regCourses) {
     		this.regCourses = regCourses;
+    	};
+
+    	this.setCurrentUser = function (user) {
+    		this.currentUser = user;
     	};
 
 }]);

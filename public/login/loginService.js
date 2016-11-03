@@ -5,8 +5,7 @@ myApp.service('loginService', ['$http', function ($http) {
 
 		//alert(username);
 
-		return $http.get("http://localhost:3000/users/"+username).then(function(response){
-			//console.log(response.data);
+		return $http.get("/users/"+username).then(function(response){
 			return response.data;
 		}, function(error){
 			return error;
