@@ -28,7 +28,7 @@ courseService.setCurrentUser(user);
     };
 
 
-/*Getting courses based on the user data that we retrieved from the cookies*/
+/*Getting all the courses based on the user data that we retrieved from the cookies*/
 
 (function() {
 
@@ -43,10 +43,17 @@ courseService.setCurrentUser(user);
 
 
 }());
+/*Getting courses based on the user data that we retrieved from the cookies*/
+/*********************Ends here***************/
+
+
 
 
 /* Adding courses to the user */
 (function(){
+
+ //********//
+
       $scope.addCourseMsg = "Add Course";
 
      $scope.addNewTopic = function() {
@@ -54,10 +61,22 @@ courseService.setCurrentUser(user);
      }
 
      $scope.removeTopic = function(topic) {
-     	$scope.course.topicDetails.pop(topic);
+     	  $scope.course.topicDetails.pop(topic);
      }
   
 
+  ///////************* Testing code starts here **************///////
+        var coursesDb = $http.get("/courses")
+      .then(function(response) {
+      
+          return response.data;
+      });
+
+      _.each(coursesDb, function(eachCourse) {
+        console.log(eachCourse);
+            //if( eachCourse.name.toLowerCase() == $scope.course.name.toLowerCase()) {alert("Course name is already there.");} 
+        });
+  ///////************* Testing code ends here **************///////
 	 $scope.saveCourse = function() {
 
 	 	var newCourse = $scope.course;

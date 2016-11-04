@@ -16,9 +16,13 @@ var PORT = process.env.PORT || 3000;
 
 var encryptionKey = "secretKey";
 
-dbUrl = "mongodb://localhost:27017/mytutor";
+//dbUrl = "mongodb://localhost:27017/mytutor";
 
-var myDb = mongoose.connect(dbUrl);
+
+
+//var myDb = mongoose.connect(dbUrl);
+
+var myDb = mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost:27017/mytutor');
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/'));

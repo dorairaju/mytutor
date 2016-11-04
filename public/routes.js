@@ -1,5 +1,7 @@
 myApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
 
+    $urlRouterProvider.otherwise("/login");
+
 	$stateProvider
 		.state('login', {
 			url: '/login',
@@ -47,14 +49,6 @@ myApp.run(['$rootScope', '$cookies', '$location', '$http', function ($rootScope,
 
     }
 
-    $rootScope.cookieRefresh = function () {
-        //alert($cookies.get('currentUser'));
-
-        //JSON.parse($cookies.get('currentUser'));
-    }
-
-
-
     $rootScope.$on('$stateChangeStart', function (event, toState, fromState) {
         console.log(toState.name);
 
@@ -81,12 +75,6 @@ myApp.run(['$rootScope', '$cookies', '$location', '$http', function ($rootScope,
         }
 
         //alert(loggedInUser);
-
-        if( loggedInUser !== undefined){
-            //alert("hii");
-
-            $rootScope.cookieRefresh();
-        }
 
        	// if (toState.name === 'login' || toState.name === 'signup') {
        	// 	    //alert("Hii");
