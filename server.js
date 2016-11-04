@@ -23,7 +23,9 @@ var encryptionKey = "secretKey";
 //var myDb = mongoose.connect(dbUrl);
 
 
-var myDb = mongoose.connect('mongodb://dorai:mytutorpassword@ds143737.mlab.com:43737/mytutor' || 'mongodb://localhost:27017/mytutor');
+//var myDb = mongoose.connect('mongodb://dorai:mytutorpassword@ds143737.mlab.com:43737/mytutor' || 'mongodb://localhost:27017/mytutor');
+
+var myDb = mongoose.connect('mongodb://localhost:27017/mytutor');
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/'));

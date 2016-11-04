@@ -1,13 +1,14 @@
 myApp.controller('loginController', ['$scope','$location', 'loginService', '$http', '$cookies', function ($scope, $location, loginService, $http, $cookies) {
     $scope.value = 'Login';
 
+
 	$scope.login = function() {
 
 	    loginService.userData($scope.username).then(function(response){
 
 	    	var userDB = response[0];
 
-	    	//console.log(userDB);
+	    	//console.log(response[0].username.toLowerCase());
 
 	    	if( response[0] && $scope.username == response[0].username.toLowerCase())
 	    	{

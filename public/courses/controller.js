@@ -38,7 +38,7 @@ courseService.setCurrentUser(user);
       
       $scope.courses = response.data;
 
-      //console.log(response);
+      //console.log($scope.courses);
   });
 
 
@@ -46,8 +46,35 @@ courseService.setCurrentUser(user);
 /*Getting courses based on the user data that we retrieved from the cookies*/
 /*********************Ends here***************/
 
+/*********************Courses validation starts here***************/
+(function(){
+
+      var coursesDb;
+      $scope.valCourseName = function () {
+
+          $http.get("/courses")
+            .then(function(response) {
+              
+              coursesDb = response.data;
+              $scope.showError = false;
+
+              _.each(coursesDb, function(eachCourse) {
+                  
+                  if( eachCourse.name.toLowerCase() == $scope.course.name.toLowerCase()) {
+                    //alert("Course name is already there.");
+                     $scope.showError = true;
+                     //$scope.course.name = '';
+                   }
+              });
+
+              
+          });
+                
+      };
 
 
+}());
+/*********************Courses validation ends here***************/
 
 /* Adding courses to the user */
 (function(){
@@ -65,18 +92,6 @@ courseService.setCurrentUser(user);
      }
   
 
-  ///////************* Testing code starts here **************///////
-        var coursesDb = $http.get("/courses")
-      .then(function(response) {
-      
-          return response.data;
-      });
-
-      _.each(coursesDb, function(eachCourse) {
-        console.log(eachCourse);
-            //if( eachCourse.name.toLowerCase() == $scope.course.name.toLowerCase()) {alert("Course name is already there.");} 
-        });
-  ///////************* Testing code ends here **************///////
 	 $scope.saveCourse = function() {
 
 	 	var newCourse = $scope.course;
